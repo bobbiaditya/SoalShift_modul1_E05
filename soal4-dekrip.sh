@@ -4,15 +4,15 @@ chr(){
  printf \\$(printf '%03o' $1)
 }
 
-awal=`cat /var/log/syslog`
+awal=`cat "$1$2"`
 
-jam=`date +%H`
+jam=${1:0:2}
 menit=`date +%M`
 tanggal=`date +%d`
 bulan=`date +%m`
 tahun=`date +%Y`
 
-fname="$jam:$menit $tanggal-$bulan-$tahun"
+fname="dekrip"
 
 ordajam=`expr $jam + 65`
 ordzjam=`expr $jam + 65 - 1`
@@ -26,10 +26,12 @@ then
   #echo $awal > "$fname"
 elif [ $jam -eq 1 ]
 then
-  printf '%s' "$awal" | tr A-Za-z B-ZAb-za >"$fname"
+  printf '%s' "$awal" | tr B-ZAb-za A-Za-z >"$fname"
+  #printf '%s' "$awal" | tr A-Za-z B-ZAb-za >"$fname"
   #echo $awal | tr A-Za-z B-ZAb-za > "$fname"
 else
   rule="$chrajam-ZA-$chrzjam"
-  printf '%s' "$awal" | tr A-Za-z $rule${rule,,} > "$fname"
+  printf '%s' "$awal" | tr $rule${rule,,} A-Za-z > "$fname"  
+  #printf '%s' "$awal" | tr A-Za-z $rule${rule,,} > "$fname"
   #echo $awal | tr A-Za-z $rule${rule,,} > "$fname"
 fi
