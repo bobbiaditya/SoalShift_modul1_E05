@@ -7,6 +7,7 @@ Kemudian menyimpan syslog tersebut didalam file bernama "modul1" dan script ini 
 
 
 script yang kami gunakan adalah:
+
 `cat /var/log/syslog | awk 'tolower($0) ~ /cron/ &&  tolower($0) ~ !/sudo/ {print $0;}' | awk 'NF<13' >> $HOME/modul1`
 
 
