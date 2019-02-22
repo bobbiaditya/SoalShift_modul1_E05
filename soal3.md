@@ -16,23 +16,25 @@ check_diff="ada"
 candf=""
 ```
 
-### 
+### Password Candidate Generation
 
-Variabel `extracted` akan mengecek apakah sudah ada folder nature atau belum, jika belum, maka berkas `nature.zip` akan kita ekstrak.
-
-Lalu kita harus membuat folder tujuan untuk menyimpan file hasil ekstraksi tersebut. Hal tersebut dapat dilakukan dengan ...
+Langkah selanjutnya adalah melakukan pembuatan password secara acak.
 
 ```bash
-folder_in=`pwd`"/nature"
-folder_out=`pwd`"/soal_satu_out"
+until [ ${#check_diff} == 0 ]
+do
+    candf=`head /dev/urandom | tr -dc a-zA-Z0-9 | head -c 12 | 
+            awk '$0 ~ /[a-z]/ && $0 ~ /[0-9]/ && $0 ~ /[A-Z]/ {print $0;}'`
+    check_diff=`cat password*txt 2> /dev/null | grep ^"$candf"$`
 
-folder_out_exist=`ls -l | grep "^dr.*soal_satu_out$"`
-
-if [ ${#folder_out_exist} == 0 ]
-then
-    mkdir `pwd`"/soal_satu_out"
-fi
+    if [ ${#candf} == 0 ]
+    then
+        check_diff="ada"
+    fi
+done
 ```
+Kita melakukan `until` loop sampai password memenuhi persyaratan 
+
 
 ### Decoding Files
 
