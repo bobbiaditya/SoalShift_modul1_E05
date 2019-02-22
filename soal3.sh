@@ -1,14 +1,23 @@
 #!/bin/bash
-# Belum bisa membuktikan uncollisionable
-i=1
 
+i=1
 check_diff="ada"
+candf=""
+
 until [ ${#check_diff} == 0 ]
 do
-    cand1=`date +%s%NS | sha256sum | head -c 9`
-    cand2=`date +%NS | base64 | head -c 3`
-    candf=$cand1${cand2^^}
-    check_diff=`cat "password"* 2> /dev/null | grep ^"$candf"$`
+    # cand1=`date +%s%NS | sha256sum | head -c 9`
+    # cand2=`date +%NS | base64 | head -c 3`
+    # candf=`echo $cand1${cand2^^} | awk '$0 ~ /[a-z]/ && $0 ~ /[0-9]/ {print $0;}'`
+
+    candf=`head /dev/urandom | tr -dc a-zA-Z0-9 | head -c 12 | 
+            awk '$0 ~ /[a-z]/ && $0 ~ /[0-9]/ && $0 ~ /[A-Z]/ {print $0;}'`
+    check_diff=`cat password*txt 2> /dev/null | grep ^"$candf"$`
+
+    if [ ${#candf} == 0 ]
+    then
+        check_diff="ada"
+    fi
 done
 
 while [ 1 ]
