@@ -33,41 +33,42 @@ do
     fi
 done
 ```
-Kita melakukan `until` loop sampai password memenuhi persyaratan 
 
+Kita melakukan `until` loop sampai password memenuhi persyaratan. Loop yang kita lakukan adalah kita membuat kandidat password random yang memenuhi syarat. Syaratnya adalah harus ada huruf kecil, huruf kapital, dan angka didalamnya. Jika password random yang telah dibuat tidak memenuhi syarat, program akan mengenerate kandidat password yang baru, hingga memenuhi syarat dan tidak ada yang sama dibandingkan password-password sebelumnya.
 
-### Decoding Files
+`head /dev/urandom` >> mengambil head dari berkas random yang otomatis digenerate oleh kernel
 
-Langkah selanjutnya adalah decoding berkas-berkas yang telah kita ekstrak tersebut. Kita daoat melakukannya dengan ...
+`tr -dc a-zA-Z0-9` >> megubah karakter tersebut menjadi karakter huruf dan angka
+
+`head -c 12` >> mengambil 12 karakter dari head
+
+`awk '$0 ~ /[a-z]/ && $0 ~ /[0-9]/ && $0 ~ /[A-Z]/ {print $0;}'` >> mengecek apakah password yang digenerate memenuhi syarat
+
+check_diff=`cat password*txt 2> /dev/null | grep ^"$candf"$` >> mencocokkan dengan password-password sebelumnya sudah apakah ada password yang sama atau tidak
 
 ```bash
-decode_img() {
-    cat $2"/"$1 | base64 -d | xxd -r > $3"/"$1
-}
+   if [ ${#candf} == 0 ]
+    then
+        check_diff="ada"
+    fi
+```
 
-file_list=`ls $folder_in`
+Proses diatas adalah sebagai penanda apakah ada password yang sama dengan yang sebelumnya atau password yang digenerate tidak memenuhi syarat, maka akan dibuat kandidat password yang baru.
 
-for file in $file_list
+### Cek ketersediaan password
+
+```bash
+while [ 1 ]
 do
-    decode_img $file $folder_in $folder_out
-    ... # command untuk subbab bawah
+    ls_out=`ls "password"$i".txt" 2> /dev/null`
+    if [ ${#ls_out} == 0 ]
+    then
+        echo "$candf" > "password"$i".txt"
+        break
+    fi
+
+    i=`expr $i + 1`
 done
 ```
 
-### Displaying Images
-
-Kemudian kita harus menampilkan gambar tersebut. Hal ini dapat dilakukan dengan menggunakan utilitas `display` yang merupakan bawaan dari utilitas **ImageMagick**.
-
-```bash
-# Kita harus melakukan export display port 
-# terlebih dahulu, agar berkas dapat dibuka
-# di program GUI
-export DISPLAY=:0
-
-# Iterasi ini sama dengan iterasi di Decoding Files
-for file in $file_list
-do
-   ... # command subbab atas
-   display $folder_out/$file 
-done
-```
+Proses diatas adalah untuk mengecek apakah password-password yang telah digenerate ada yang hilang atau dihapus. Apabila ada password yang hilang (contoh password yang ada password{1,2,4}), maka password yang hilang ini akan digenerate(password3). Apabila semua password masih ada, maka akan mengenerate password selanjutna.
