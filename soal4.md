@@ -105,8 +105,8 @@ Penjelasan dari script yang kami gunakan:
           #printf '%s' "$awal" | tr A-Za-z $rule${rule,,} > "$fname"
           #echo $awal | tr A-Za-z $rule${rule,,} > "$fname"
         fi
-   }
-```
+  }
+  ```
   Kodingan di atas berguna untuk melakukan dekripsi. Konsep yang digunakan sama dengan enkripsi. Perbedaannya hanya berada pada kondisi **tr**. Jika pada enkripsi kita menggunakan ``A-Za-z B-ZAb-za``, pada dekrip kondisi tersebut dibalik menjadi ``B-ZAb-za``
 
 ### Argumen
