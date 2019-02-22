@@ -19,4 +19,11 @@ script yang kami gunakan adalah:
 
 - `awk 'NF<13'` >> berguna untuk memberi syarat bahwa baris yang di tampilkan harus memiliki < 13 field(kolom)
 
-- `>> $HOME/modul1` menyimpan hasil proses kedalam file modul1
+- `>> $HOME/modul1` menyimpan hasil proses kedalam file 
+
+
+Untuk mengatur agar script ini dijalankan sesuai waktu yang ditentukan, cron yang kami gunakan adalah
+
+`2-30/6 * * * * bash $HOME/soal5.sh`
+
+Arti dari cron tersebut adalah dari menit 2-30 **setiap 6 menit sekali** soal.5sh akan dijalankan
