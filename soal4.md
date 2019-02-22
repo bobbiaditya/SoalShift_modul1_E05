@@ -37,17 +37,17 @@ Penjelasan dari script yang kami gunakan:
   Berguna untuk merubah jam, menjadi huruf yang nantinya digunakan dalam konversi, *chrajam* adalah perubahan dari huruf a sedangkan *chrzjam* adalah perubahan dari huruf z
 
 - ```
-if [ $jam -eq 0 ]
-then
-  printf '%s' "$awal" >"$fname"
-  #echo $awal > "$fname"
-elif [ $jam -eq 1 ]
-then
-  printf '%s' "$awal" | tr A-Za-z B-ZAb-za >"$fname"
-  #echo $awal | tr A-Za-z B-ZAb-za > "$fname"
-else
-  rule="$chrajam-ZA-$chrzjam"
-  printf '%s' "$awal" | tr A-Za-z $rule${rule,,} > "$fname"
-  #echo $awal | tr A-Za-z $rule${rule,,} > "$fname"
-fi
+  if [ $jam -eq 0 ]
+  then
+    printf '%s' "$awal" >"$fname"
+    #echo $awal > "$fname"
+  elif [ $jam -eq 1 ]
+  then
+    printf '%s' "$awal" | tr A-Za-z B-ZAb-za >"$fname"
+    #echo $awal | tr A-Za-z B-ZAb-za > "$fname"
+  else
+    rule="$chrajam-ZA-$chrzjam"
+    printf '%s' "$awal" | tr A-Za-z $rule${rule,,} > "$fname"
+    #echo $awal | tr A-Za-z $rule${rule,,} > "$fname"
+  fi
   ```
