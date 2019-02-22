@@ -428,7 +428,7 @@ Arti dari cron tersebut adalah **setiap 1 jam sekali** soal4.sh akan dijalankan
 
 Pada soal nomor 5, kita diminta untuk menampilkan syslog dengan syarat:
 
-a.	Tidak mengandung string â€œsudoâ€, tetapi mengandung string â€œcronâ€(case insensitive)
+a.	Tidak mengandung string "sudo", tetapi mengandung string "cron". (case insensitive)
 
 b.	Jumlah field (number of field) pada baris tersebut berjumlah kurang dari 13.
 Kemudian menyimpan syslog tersebut didalam file bernama "modul1" dan script ini harus dijalankan setiap 6 menit dari menit ke 2 sampai menit ke 30.
