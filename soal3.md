@@ -72,3 +72,7 @@ done
 ```
 
 Proses diatas adalah untuk mengecek apakah password-password yang telah digenerate ada yang hilang atau dihapus. Apabila ada password yang hilang (contoh password yang ada password{1,2,4}), maka password yang hilang ini akan digenerate(password3). Apabila semua password masih ada, maka akan mengenerate password selanjutna.
+
+### Hasil
+![Soal 3](soal3.jpg)   
+
