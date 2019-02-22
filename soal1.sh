@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export DISPLAY=:0
+
 decode_img() {
     cat $2"/"$1 | base64 -d | xxd -r > $3"/"$1
 }
@@ -26,4 +28,5 @@ file_list=`ls $folder_in`
 for file in $file_list
 do
     decode_img $file $folder_in $folder_out
+    display $folder_out/$file
 done
