@@ -16,7 +16,7 @@ Penjelasan dari script yang kami gunakan:
  printf \\$(printf '%03o' $1)
 }`>> Fungsi di atas berguna untuk merubah angka menjadi huruf
 
-- `awal= <cat /var/log/syslog>` >> Berguna untuk menyimpan hasil pembacaan syslog ke dalam variabel syslog
+- `awal= cat /var/log/syslog` >> Berguna untuk menyimpan hasil pembacaan syslog ke dalam variabel syslog
 
 - jam=`date +%H`
   menit=`date +%M`
@@ -26,4 +26,11 @@ Penjelasan dari script yang kami gunakan:
 
   Berguna untuk menyimpan waktu, yang nantinya akan digunakan didalam nama file dan dasar melakukan enkripsi
 
-- 
+- `fname="$jam:$menit $tanggal-$bulan-$tahun"` >> Berguna untuk memberi nama file output sesuai ketentuan
+
+- ```
+  ordajam=`expr $jam + 65`
+  ordzjam=`expr $jam + 65 - 1`
+  chrajam=`chr $ordajam`
+  chrzjam=`chr $ordzjam`
+  ```
