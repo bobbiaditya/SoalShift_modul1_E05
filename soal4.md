@@ -110,6 +110,7 @@ Penjelasan dari script yang kami gunakan:
   Kodingan di atas berguna untuk melakukan dekripsi. Konsep yang digunakan sama dengan enkripsi. Perbedaannya hanya berada pada kondisi **tr**. Jika pada enkripsi kita menggunakan ``A-Za-z B-ZAb-za``, pada dekrip kondisi tersebut dibalik menjadi ``B-ZAb-za``
 
 ### Argumen
+
 - ```
 	case $1 in
         "-e") enkrip;;
@@ -118,16 +119,16 @@ Penjelasan dari script yang kami gunakan:
    ```
    Kodingan di atas berguna untuk menyediakan option dalam menjalankan script. Jika kita ingin menjalankan enkrip, maka kita perlu mengetikkan bashh soal4.sh -e. Jika kita ingin menjalankan dekripsi, kita perlu mengetikkan soal4.sh -d "namafile"
 
-###Cron
+### Cron
 
 Untuk mengatur agar script ini dijalankan sesuai waktu yang ditentukan, cron yang kami gunakan adalah
 
-0 * * * * bash $HOME/soal4.sh
+`0 * * * * bash $HOME/soal4.sh`
 
 Arti dari cron tersebut adalah **setiap 1 jam sekali** soal.5sh akan dijalankan
 
 
-###Hasil
+### Hasil
 ![Soal 4](soal4.jpg)   
 
 
