@@ -10,7 +10,9 @@ Kemudian menyimpan syslog tersebut didalam file bernama "modul1" dan script ini 
 
 script yang kami gunakan adalah:
 
-`cat /var/log/syslog | awk 'tolower($0) ~ /cron/ &&  tolower($0) ~ !/sudo/ {print $0;}' | awk 'NF<13' >> $HOME/modul1`
+```bash
+cat /var/log/syslog | awk 'tolower($0) ~ /cron/ &&  tolower($0) ~ !/sudo/ {print $0;}' | awk 'NF<13' >> $HOME/modul1
+```
 
 ### Pembacaan file
 
@@ -35,7 +37,9 @@ script yang kami gunakan adalah:
 
 Untuk mengatur agar script ini dijalankan sesuai waktu yang ditentukan, cron yang kami gunakan adalah
 
-`2-30/6 * * * * bash $HOME/soal5.sh`
+```c
+2-30/6 * * * * bash $HOME/soal5.sh
+```
 
 Arti dari cron tersebut adalah dari menit 2-30 **setiap 6 menit sekali** soal.5sh akan dijalankan
 
