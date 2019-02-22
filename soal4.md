@@ -63,7 +63,7 @@ Penjelasan dari script yang kami gunakan:
 	  printf '%s' "$awal" | tr A-Za-z $rule${rule,,} > "$fname"
 	  #echo $awal | tr A-Za-z $rule${rule,,} > "$fname"
 	fi
-}
+  }
   ```
   Kodingan di atas adalah algoritma dalam proses perubahan karakter dari isi file syslog(enkripsi).
 
