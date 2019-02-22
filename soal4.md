@@ -2,7 +2,7 @@
 
 Pada soal nomor 4, kita diminta untuk melakukan backup syslog setiap jam dengan kriteria:
 
-a. Nama file “jam:menit tanggal-bulan-tahun”.
+a. Nama file "jam:menit tanggal-bulan-tahun".
 
 b. Isi dari file di enkrip menggunakan konversi huruf berdasarkan jam pada saat backup dilakukan
 
@@ -22,7 +22,7 @@ Penjelasan dari script yang kami gunakan:
 
 - `awal= cat /var/log/syslog` >> Berguna untuk menyimpan hasil pembacaan syslog ke dalam variabel syslog
 
-- ```
+- ```bash
   ordajam=`expr $jam + 65`
   ordzjam=`expr $jam + 65 - 1`
   chrajam=`chr $ordajam`
@@ -32,39 +32,41 @@ Penjelasan dari script yang kami gunakan:
 
 ### Nama file output
 
-- jam=`date +%H`
-  menit=`date +%M`
-  tanggal=`date +%d`
-  bulan=`date +%m`
-  tahun=`date +%Y`
+```bash
+jam=`date +%H`
+menit=`date +%M`
+tanggal=`date +%d`
+bulan=`date +%m`
+tahun=`date +%Y`
+```
 
   Berguna untuk menyimpan waktu, yang nantinya akan digunakan didalam nama file dan dasar melakukan enkripsi
 
-- `fname="$jam:$menit $tanggal-$bulan-$tahun"` >> Berguna untuk memberi nama file output sesuai ketentuan
+```bash
+fname="$jam:$menit $tanggal-$bulan-$tahun"
+```
+Berguna untuk memberi nama file output sesuai ketentuan
 
 ### Enkripsi
 
-- ```
-	enkrip(){
-	ordajam=`expr $jam + 65`
-	ordzjam=`expr $jam + 65 - 1`
-	chrajam=`chr $ordajam`
-	chrzjam=`chr $ordzjam`
-	if [ $jam -eq 0 ]
-	then
-	  printf '%s' "$awal" >"$fname"
-	  #echo $awal > "$fname"
-	elif [ $jam -eq 1 ]
-	then
-	  printf '%s' "$awal" | tr A-Za-z B-ZAb-za >"$fname"
-	  #echo $awal | tr A-Za-z B-ZAb-za > "$fname"
-	else
-	  rule="$chrajam-ZA-$chrzjam"
-	  printf '%s' "$awal" | tr A-Za-z $rule${rule,,} > "$fname"
-	  #echo $awal | tr A-Za-z $rule${rule,,} > "$fname"
-	fi
-  }
-  ```
+```bash
+enkrip(){
+  ordajam=`expr $jam + 65`
+  ordzjam=`expr $jam + 65 - 1`
+  chrajam=`chr $ordajam`
+  chrzjam=`chr $ordzjam`
+  if [ $jam -eq 0 ]
+  then
+    printf '%s' "$awal" >"$fname"
+  elif [ $jam -eq 1 ]
+  then
+    printf '%s' "$awal" | tr A-Za-z B-ZAb-za >"$fname"
+  else
+    rule="$chrajam-ZA-$chrzjam"
+    printf '%s' "$awal" | tr A-Za-z $rule${rule,,} > "$fname"
+  fi
+}
+```
   Kodingan di atas adalah algoritma dalam proses perubahan karakter dari isi file syslog(enkripsi).
 
   Jika jam perubahan = 0, maka file syslog tidak akan melakukan enkripsi apapun
@@ -81,51 +83,54 @@ Penjelasan dari script yang kami gunakan:
 
 ### Dekripsi
 
-- ```
-  dekrip(){
-        jam=${1:0:2}
-        awal=`cat "$1 $2"`
-        fname="$1 $2_d"
-        ordajam=`expr $jam + 65`
-        ordzjam=`expr $jam + 65 - 1`
-        chrajam=`chr $ordajam`
-        chrzjam=`chr $ordzjam`
-        if [ $jam -eq 0 ]
-        then
-          printf '%s' "$awal" >"$fname"
-          #echo $awal > "$fname"
-        elif [ $jam -eq 1 ]
-        then
-          printf '%s' "$awal" | tr B-ZAb-za A-Za-z >"$fname"
-          #printf '%s' "$awal" | tr A-Za-z B-ZAb-za >"$fname"
-          #echo $awal | tr A-Za-z B-ZAb-za > "$fname"
-        else
-          rule="$chrajam-ZA-$chrzjam"
-          printf '%s' "$awal" | tr $rule${rule,,} A-Za-z > "$fname"  
-          #printf '%s' "$awal" | tr A-Za-z $rule${rule,,} > "$fname"
-          #echo $awal | tr A-Za-z $rule${rule,,} > "$fname"
-        fi
-  }
+```bash
+dekrip(){
+  jam=${1:0:2}
+  awal=`cat "$1 $2"`
+  fname="$1 $2_d"
+  ordajam=`expr $jam + 65`
+  ordzjam=`expr $jam + 65 - 1`
+  chrajam=`chr $ordajam`
+  chrzjam=`chr $ordzjam`
+  if [ $jam -eq 0 ]
+  then
+    printf '%s' "$awal" >"$fname"
+    #echo $awal > "$fname"
+  elif [ $jam -eq 1 ]
+  then
+    printf '%s' "$awal" | tr B-ZAb-za A-Za-z >"$fname"
+    #printf '%s' "$awal" | tr A-Za-z B-ZAb-za >"$fname"
+    #echo $awal | tr A-Za-z B-ZAb-za > "$fname"
+  else
+    rule="$chrajam-ZA-$chrzjam"
+    printf '%s' "$awal" | tr $rule${rule,,} A-Za-z > "$fname"  
+    #printf '%s' "$awal" | tr A-Za-z $rule${rule,,} > "$fname"
+    #echo $awal | tr A-Za-z $rule${rule,,} > "$fname"
+  fi
+}
   ```
   Kodingan di atas berguna untuk melakukan dekripsi. Konsep yang digunakan sama dengan enkripsi. Perbedaannya hanya berada pada kondisi **tr**. Jika pada enkripsi kita menggunakan ``A-Za-z B-ZAb-za``, pada dekrip kondisi tersebut dibalik menjadi ``B-ZAb-za``
 
 ### Argumen
 
-- ```
-	case $1 in
-        "-e") enkrip;;
-        "-d") dekrip $2 $3;;
-	esac
-   ```
-   Kodingan di atas berguna untuk menyediakan option dalam menjalankan script. Jika kita ingin menjalankan enkrip, maka kita perlu mengetikkan bashh soal4.sh -e. Jika kita ingin menjalankan dekripsi, kita perlu mengetikkan soal4.sh -d "namafile"
+```bash
+case $1 in
+  "-e") enkrip;;
+  "-d") dekrip $2 $3;;
+esac
+```
+
+Kodingan di atas berguna untuk menyediakan option dalam menjalankan script. Jika kita ingin menjalankan enkrip, maka kita perlu mengetikkan bashh soal4.sh -e. Jika kita ingin menjalankan dekripsi, kita perlu mengetikkan soal4.sh -d "namafile"
 
 ### Cron
 
 Untuk mengatur agar script ini dijalankan sesuai waktu yang ditentukan, cron yang kami gunakan adalah
 
-`0 * * * * bash $HOME/soal4.sh`
+```c
+0 * * * * bash $HOME/soal4.sh
+```
 
-Arti dari cron tersebut adalah **setiap 1 jam sekali** soal.5sh akan dijalankan
+Arti dari cron tersebut adalah **setiap 1 jam sekali** soal4.sh akan dijalankan
 
 
 ### Hasil

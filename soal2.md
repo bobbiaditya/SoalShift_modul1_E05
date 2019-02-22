@@ -116,6 +116,6 @@ END {
 }
 ```
 
-### Screenshot
+### Hasil
 
 ![Soal 2](soal2.jpg)

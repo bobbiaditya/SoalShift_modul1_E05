@@ -75,6 +75,6 @@ dengan isi konfigurasi sebagai berikut
 14 14 14 2 5 bash $HOME/soal1.sh
 ```
 
-### Tangkapan Layar
+### Hasil
 
 ![Soal 1](soal1.jpg)
