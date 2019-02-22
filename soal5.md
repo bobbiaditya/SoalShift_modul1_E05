@@ -37,7 +37,9 @@ cat /var/log/syslog | awk 'tolower($0) ~ /cron/ &&  tolower($0) ~ !/sudo/ {print
 
 Untuk mengatur agar script ini dijalankan sesuai waktu yang ditentukan, cron yang kami gunakan adalah
 
-`2-30/6 * * * * bash $HOME/soal5.sh`
+```c
+2-30/6 * * * * bash $HOME/soal5.sh
+```
 
 Arti dari cron tersebut adalah dari menit 2-30 **setiap 6 menit sekali** soal.5sh akan dijalankan
 
