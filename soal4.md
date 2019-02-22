@@ -14,7 +14,7 @@ Untuk kodingan script bisa diliat di [sini](https://github.com/anggar/SoalShift_
 
 Penjelasan dari script yang kami gunakan:
 
-###Konversi huruf dan baca file
+### Konversi huruf dan baca file
 
 - `chr(){
  printf \\$(printf '%03o' $1)
@@ -30,7 +30,7 @@ Penjelasan dari script yang kami gunakan:
   ```
   Berguna untuk merubah jam, menjadi huruf yang nantinya digunakan dalam konversi, *chrajam* adalah perubahan dari huruf a sedangkan *chrzjam* adalah perubahan dari huruf z
 
-###Nama file output
+### Nama file output
 
 - jam=`date +%H`
   menit=`date +%M`
@@ -42,7 +42,7 @@ Penjelasan dari script yang kami gunakan:
 
 - `fname="$jam:$menit $tanggal-$bulan-$tahun"` >> Berguna untuk memberi nama file output sesuai ketentuan
 
-###Enkripsi
+### Enkripsi
 
 - ```
 	enkrip(){
@@ -79,7 +79,7 @@ Penjelasan dari script yang kami gunakan:
 
   Yang terakhir ` > "$fname" ` digunakan untuk menyimpan hasil enkripsi itu kedalam file yang tadi sudah kita beri nama sesuai dengan waktu dijalankannya script backup ini
 
-###Dekripsi
+### Dekripsi
 
 - ```
   dekrip(){
@@ -109,7 +109,7 @@ Penjelasan dari script yang kami gunakan:
 ```
   Kodingan di atas berguna untuk melakukan dekripsi. Konsep yang digunakan sama dengan enkripsi. Perbedaannya hanya berada pada kondisi **tr**. Jika pada enkripsi kita menggunakan ``A-Za-z B-ZAb-za``, pada dekrip kondisi tersebut dibalik menjadi ``B-ZAb-za``
 
-###Argumen
+### Argumen
 - ```
 	case $1 in
         "-e") enkrip;;
